@@ -1,0 +1,40 @@
+{
+  "name": "import-cdn-json-function",
+  "version": "1.0.0",
+  "description": "A General Utils Library For Reading Remote Json",
+  "type": "module",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "rimraf dist && rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MakeBetterMe/import-cdn-json-function.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MakeBetterMe/import-cdn-json-function/issues"
+  },
+  "homepage": "https://github.com/MakeBetterMe/import-cdn-json-function#readme",
+  "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/plugin-external-helpers": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/runtime": "^7.21.0",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rimraf": "^4.4.0",
+    "rollup": "^3.19.1"
+  },
+  "dependencies": {
+    "@babel/runtime-corejs3": "^7.21.0"
+  }
+}
