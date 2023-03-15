@@ -1,6 +1,6 @@
 {
   "name": "import-cdn-json-function",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A General Utils Library For Reading Remote Json",
   "type": "module",
   "main": "dist/index.umd.js",
