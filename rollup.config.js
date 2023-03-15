@@ -2,9 +2,8 @@ import {babel} from '@rollup/plugin-babel';
 import terser from "@rollup/plugin-terser";
 import commonjs from "@rollup/plugin-commonjs";
 import nodeResolve from "@rollup/plugin-node-resolve";
-import {DEFAULT_EXTENSIONS} from '@babel/core';
 import json from '@rollup/plugin-json';
-// import pkg from './package.json';
+import strip from '@rollup/plugin-strip';
 
 export default {
   input: 'src/index.js',
@@ -24,6 +23,7 @@ export default {
     nodeResolve(),
     commonjs(),
     terser(),
+    strip(),
     babel({
       exclude: 'node_modules/**',
       babelHelpers: 'runtime'

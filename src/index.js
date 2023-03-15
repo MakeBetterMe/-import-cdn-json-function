@@ -1,8 +1,9 @@
 const ZZCacheName = '__zz_json_maps_cache__';
 const ZZCosResourceBaseUrl = "https://wpm.hsmob.com/wpmv2";
 
-export default async function (options, callBack) {
+export default async function fetchJson (options, callBack) {
   try {
+    console.log('options',options);
     if (!window[ZZCacheName]){
       window[ZZCacheName] = {};
     }
@@ -16,13 +17,16 @@ export default async function (options, callBack) {
       source = options;
       env = window.location.origin.includes('weimobqa') ? 'qa' : 'online';
     }
+    console.log('source',source);
+    console.log('env',env);
     if (caches[source]) {
-      callBack(null, caches[source]);
+      callBack && callBack(null, caches[source]);
       return caches[source];
     }
     let [_, pkgName] = source.match(/[\\/]+wpmjs[\\/]+\$[\\/]+(.+)/) || []
     let url = '';
     if (pkgName) {
+      console.log('pkgName',pkgName)
       const {
         name,
         version,
@@ -34,12 +38,15 @@ export default async function (options, callBack) {
     } else if (/^https?:\/\//.test(source)) {
       url = source;
     }
+    console.log('url',url);
     const data = await fetch(url)
+    // console.log('data',data);
     caches[source] = data;
-    callBack(null, data);
+    callBack && callBack(null, data);
     return data;
   } catch (e) {
-    callBack(e, null)
+    callBack && callBack(e, null)
+    console.log('e',e)
     throw e;
   }
 }
