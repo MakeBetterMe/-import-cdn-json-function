@@ -1,52 +1,54 @@
 const ZZCacheName = '__zz_json_maps_cache__';
 const ZZCosResourceBaseUrl = "https://wpm.hsmob.com/wpmv2";
 
-export default async function fetchJson (options, callBack) {
+export default async function fetchJson(options, callBack) {
   try {
-    console.log('options',options);
-    if (!window[ZZCacheName]){
+    console.log('options', options);
+    if (!window[ZZCacheName]) {
       window[ZZCacheName] = {};
     }
     const caches = window[ZZCacheName];
     let source = '';
     let env = '';
-    if (isObject(options)){
+    if (isObject(options)) {
       source = options.source;
       env = options.env || window.location.origin.includes('weimobqa') ? 'qa' : 'online';
-    }else{
+    } else {
       source = options;
       env = window.location.origin.includes('weimobqa') ? 'qa' : 'online';
     }
-    console.log('source',source);
-    console.log('env',env);
+    console.log('source', source);
+    console.log('env', env);
     if (caches[source]) {
       callBack && callBack(null, caches[source]);
       return caches[source];
     }
-    let [_, pkgName] = source.match(/[\\/]+wpmjs[\\/]+\$[\\/]+(.+)/) || []
+    // let [_, pkgName] = source.match(/[\\/]+wpmjs[\\/]+\$[\\/]+(.+)/) || []
     let url = '';
-    if (pkgName) {
-      console.log('pkgName',pkgName)
+    if (/^https?:\/\//.test(source)) {
+      url = source;
+    } else {
       const {
         name,
         version,
-        entry = '',
         query
-      } = getPkgInfo(pkgName)
+      } = getPkgInfo(source)
       const filename = 'index.json';
-      url = `${ZZCosResourceBaseUrl}/${name}/${version}/${env}/${filename}?${query}&${createTimestampVersion()}`;
-    } else if (/^https?:\/\//.test(source)) {
-      url = source;
+      if (version !== 'latest'){
+        url = `${ZZCosResourceBaseUrl}/${name}/${version}/${filename}?${query}&${createTimestampVersion()}`;
+      }else{
+        url = `${ZZCosResourceBaseUrl}/${name}/${version}/${env}/${filename}?${query}&${createTimestampVersion()}`;
+      }
     }
-    console.log('url',url);
+    console.log('url', url);
     const data = await fetch(url)
-    // console.log('data',data);
+    console.log('data',data);
     caches[source] = data;
     callBack && callBack(null, data);
     return data;
   } catch (e) {
     callBack && callBack(e, null)
-    console.log('e',e)
+    console.log('e', e)
     throw e;
   }
 }

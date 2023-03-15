@@ -20,9 +20,9 @@ importCDNJson(options,(err,data)=>{
 ### options
 * 可为string 或 object；为object时，参数如下
 
-| 参数     | 类型     | 说明                                                                 |
-|--------|--------|--------------------------------------------------------------------|
-| source | string | cdn链接如 `https://www.cdn.com/test.json` <br/>或wpm包，如wpmjs/$/jsonPkg |
-| env    | string | qa或online，默认根据域名是否带qa判定                                            |
+| 参数     | 类型     | 说明                                                                  |
+|--------|--------|---------------------------------------------------------------------|
+| source | string | cdn链接如 `https://www.cdn.com/test.json` <br/>或wpm包，如wpm-test-jsonPkg |
+| env    | string | qa或online，默认根据域名是否带qa判定                                             |
 
 
