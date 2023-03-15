@@ -19,10 +19,6 @@ export default async function fetchJson(options, callBack) {
     }
     console.log('source', source);
     console.log('env', env);
-    if (caches[source]) {
-      callBack && callBack(null, caches[source]);
-      return caches[source];
-    }
     // let [_, pkgName] = source.match(/[\\/]+wpmjs[\\/]+\$[\\/]+(.+)/) || []
     let url = '';
     if (/^https?:\/\//.test(source)) {
@@ -35,12 +31,16 @@ export default async function fetchJson(options, callBack) {
       } = getPkgInfo(source)
       const filename = 'index.json';
       if (version !== 'latest'){
-        url = `${ZZCosResourceBaseUrl}/${name}/${version}/${filename}?${query}&${createTimestampVersion()}`;
+        url = `${ZZCosResourceBaseUrl}/${name}/${version}/${filename}?${query}`;
       }else{
-        url = `${ZZCosResourceBaseUrl}/${name}/${version}/${env}/${filename}?${query}&${createTimestampVersion()}`;
+        url = `${ZZCosResourceBaseUrl}/${name}/${version}/${env}/${filename}?${query}`;
       }
     }
-    console.log('url', url);
+    if (caches[url]) {
+      callBack && callBack(null, caches[url]);
+      return caches[url];
+    }
+    url += `&${createTimestampVersion()}`;
     const data = await fetch(url)
     console.log('data',data);
     caches[source] = data;
